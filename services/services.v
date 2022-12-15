@@ -2,14 +2,8 @@ module services
 
 import structs as s
 import requests as r
-import httperrors as he
 
 pub fn create_link(req_body r.CreateLinkRequest) s.ResponseObject<s.Response> {
-    if req_body.is_empty() {
-        return he.create_response_error(
-            'fields link_name(string) or link_url(string) should not be empty')
-    }
-
     created_link := s.Response(s.CreatedLink{
         link_name: 'this is the first'
         creation_date: 'string'

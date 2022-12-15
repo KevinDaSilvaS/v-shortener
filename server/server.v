@@ -1,7 +1,7 @@
 module server
 
 import vweb
-import services
+import controllers
 import structs as s
 import requests as r
 import json
@@ -17,14 +17,14 @@ pub fn new_shortener() &App {
 
 ['/:link']
 pub fn (mut app App) get_link_url_and_redirect(link string) vweb.Result {
-	return response(mut app, services.get_link_url(link))
+	return response(mut app, controllers.get_link(link))
 }
 
 ['/create'; post]
 pub fn (mut app App) create_link() !vweb.Result {
 	request_body := json.decode(r.CreateLinkRequest, app.req.data)!
 	println(request_body)
-	return response(mut app, services.create_link(request_body))
+	return response(mut app, controllers.create_link(request_body))
 }
 
 pub fn response(mut app App, obj s.ResponseObject<s.Response>) vweb.Result {
