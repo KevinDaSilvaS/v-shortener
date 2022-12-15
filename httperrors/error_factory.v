@@ -4,7 +4,7 @@ import structs as s
 
 fn build_error(message string) s.Response {
 	return s.Response(s.ApiError{
-    	message: 'Bad Request: link_name shouldnt be empty'
+    	message: message
     })
 }
 
