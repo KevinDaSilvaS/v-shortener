@@ -5,12 +5,8 @@ import requests as r
 import httperrors as he
 
 pub fn create_link(req_body r.CreateLinkRequest) s.ResponseObject<s.Response> {
-    if req_body.link_name == '' {
-        return s.ResponseObject<s.Response>{
-            code: 400
-            body: he.bad_request('Bad Request: link_name shouldnt be empty')
-            format: s.FileFormats.json
-        }
+    if req_body.is_empty() {
+        return he.create_response_error('link_name should not be empty')
     }
 
     created_link := s.Response(s.CreatedLink{
