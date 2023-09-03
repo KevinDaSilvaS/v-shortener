@@ -2,12 +2,12 @@ module httperrors
 
 import structs as s
 
-fn build_error(message string) s.Response {
-	return s.Response(s.ApiError{
-    	message: message
-    })
-}
+pub fn create_response_error(message string, code int) s.ResponseObject<s.Response> {
+	body := s.Response(s.ApiError{ message: message })
 
-pub fn bad_request(message string) s.Response {
-	return build_error('Bad Request: $message')
+    return s.ResponseObject<s.Response>{
+            code: code
+            body: body
+            format: s.FileFormats.json
+        }
 }
