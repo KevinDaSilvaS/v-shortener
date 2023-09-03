@@ -8,7 +8,8 @@ import services
 pub fn create_link(req_body r.CreateLinkRequest) s.ResponseObject<s.Response> {
     if req_body.is_empty() {
         return he.create_response_error(
-            'fields link_name(string) or link_url(string) should not be empty')
+            'fields link_name(string) or link_url(string) should not be empty',
+            400)
     }
 
     return services.create_link(req_body)
