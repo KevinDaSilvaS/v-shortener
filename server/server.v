@@ -23,7 +23,6 @@ pub fn (mut app App) get_link_url_and_redirect(link string) vweb.Result {
 ['/create'; post]
 pub fn (mut app App) create_link() !vweb.Result {
 	request_body := json.decode(r.CreateLinkRequest, app.req.data)!
-	println(request_body)
 	return response(mut app, controllers.create_link(request_body))
 }
 
