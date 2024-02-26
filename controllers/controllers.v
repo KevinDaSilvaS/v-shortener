@@ -9,7 +9,7 @@ import log
 pub fn create_link(req_body r.CreateLinkRequest) s.ResponseObject<s.Response> {
     log.info('[CONTROLLER] - create_link function')
     if req_body.is_empty() {
-        log.warn('request without body')
+        log.warn('request without body field')
         return he.create_response_error(
             'fields link_name(string) or link_url(string) should not be empty',
             400)
