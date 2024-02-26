@@ -7,9 +7,10 @@ import httperrors as he
 import time
 import log
 
+__global (db = repo.setup())
+
 pub fn create_link(req_body r.CreateLinkRequest) s.ResponseObject<s.Response> {
     log.info('[SERVICE] - create_link function')
-    db := repo.setup()
     if !db.save(req_body.link_name, req_body.link_url) {
         log.error('lost connection with database')
         return he.create_response_error('unable to reach database', 500)
@@ -29,7 +30,6 @@ pub fn create_link(req_body r.CreateLinkRequest) s.ResponseObject<s.Response> {
 
 pub fn get_link_url(link_name string) s.ResponseObject<s.Response> {
     log.info('[SERVICE] - get_link_url function')
-    db := repo.setup()
     result := db.get(link_name)
     if !result.success {
         log.warn('${link_name} not found')
