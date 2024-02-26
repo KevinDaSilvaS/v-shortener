@@ -1,6 +1,7 @@
 module repository
 
 import coachonko.redis
+import time
 
 pub struct Cache {
 	client &redis.Client
@@ -13,7 +14,8 @@ pub struct StoredValue<T> {
 }
 
 pub fn (c Cache) save(key string, value string) bool {
-	if _ := c.client.set(key, value, 0) {
+	interval := time.Duration(30 * time.second)
+	if _ := c.client.set(key, value, interval) {
 		return true
 	}
 
