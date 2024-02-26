@@ -4,6 +4,7 @@ import vweb
 import controllers
 import structs as s
 import requests as r
+import httperrors as he
 import json
 
 struct App {
@@ -15,14 +16,18 @@ pub fn new_shortener() &App {
     return app
 }
 
-['/:link']
+@['/:link']
 pub fn (mut app App) get_link_url_and_redirect(link string) vweb.Result {
 	return response(mut app, controllers.get_link(link))
 }
 
-['/create'; post]
-pub fn (mut app App) create_link() !vweb.Result {
-	request_body := json.decode(r.CreateLinkRequest, app.req.data)!
+@['/create'; post]
+pub fn (mut app App) create_link() vweb.Result {
+	request_body := json.decode(r.CreateLinkRequest, app.req.data)
+	or { 
+		msg_err := he.create_response_error('Unable to parse request body', 400)
+		return response(mut app, msg_err)
+	}
 	return response(mut app, controllers.create_link(request_body))
 }
 
