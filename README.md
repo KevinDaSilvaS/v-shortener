@@ -20,3 +20,7 @@ EXAMPLE:
 http://localhost:8081/hi
 ```
 
+How to run the app:
+```
+v -enable-globals run shortener.v //we use globals to store our redis connection
+```
